@@ -31,24 +31,35 @@ batz.left(90)
 
 state = []
 
+def forward():
+    batz.forward(2)
+def plus():
+    batz.right(25)
+def minus():
+    batz.left(25)
+def save_state():
+    state.append(batz.position())
+    state.append(batz.heading())
+def load_state():
+    batz.penup()
+    batz.setheading(state.pop())
+    batz.setposition(state.pop())
+    batz.pendown()
+def nothing():
+    pass
+    
+functions = {
+    'F': forward,
+    'X': nothing,
+    '+': plus,
+    '-': minus,
+    '[': save_state,
+    ']': load_state
+}
 for c in sentence:
-    if c == 'F':
-        batz.forward(2)
-    if c == 'X':
-        pass
-    if c == '+':
-        batz.right(25)
-    if c == '-':
-        batz.left(25)
-    if c == '[':
-        state.append(batz.position())
-        state.append(batz.heading())
-    if c == ']':
-        batz.penup()
-        batz.setheading(state.pop())
-        batz.setposition(state.pop())
-        batz.pendown()
+    functions[c]()
 
+        
 sc.update()
 
 
